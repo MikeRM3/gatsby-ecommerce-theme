@@ -1,77 +1,40 @@
-# Netlify CMS config for Kathe & Co. (Gatsby)
 backend:
   name: git-gateway
-  branch: main
+  branch: main # ✅ IMPORTANTE: Cambia a 'master' si esa es tu rama principal en GitHub/Git.
 
-site_url: "https://katheandco.netlify.app"
-display_url: "https://katheandco.netlify.app"
+# Habilita el Identity service de Netlify
+publish_mode: editorial_workflow # Opcional: para permitir borradores y revisiones antes de publicar. Si quieres publicar directamente, usa 'simple'
+media_folder: "static/img/uploads" # Dónde se guardarán las imágenes en tu repositorio
+public_folder: "/img/uploads" # La ruta pública para las imágenes en tu sitio
 
-# Carpeta en el repo donde Netlify CMS guardará uploads (relativa, SIN slash inicial)
-media_folder: "static/uploads"
-# Ruta pública desde donde se servirán las imágenes (con slash inicial)
-public_folder: "/uploads"
+# --- COLECCIONES (Ejemplo) ---
+# Debes adaptar esto a la estructura de contenido de tu sitio.
 
-# Opciones de UI
-logo_url: "/assets/logo.png"
-publish_mode: editorial_workflow    # opcional: workflow de edición antes de publicar (quítalo si no lo quieres)
-
-# Collections: define qué se puede editar desde el panel /admin
 collections:
-
-  # --- Páginas sueltas (ficheros individuales)
-  - name: "pages"
-    label: "Páginas del sitio"
+  - name: "pages" # Nombre de la colección (usado internamente)
+    label: "Páginas del Sitio" # Etiqueta que verás en el CMS
     files:
-      - file: "src/pages/index.md"
-        label: "Inicio"
+      - file: "src/data/home.md" # Ruta real del archivo a modificar
+        label: "Página de Inicio"
         name: "home"
         fields:
-          - { label: "Título principal", name: "title", widget: "string" }
-          - { label: "Subtítulo", name: "subtitle", widget: "text" }
-          - { label: "Imagen hero", name: "hero_image", widget: "image" }
-          - { label: "Texto libre (HTML o Markdown)", name: "body", widget: "markdown" }
-
-      - file: "src/pages/about.md"
-        label: "Sobre nosotros"
+          - {label: "Título Principal", name: "title", widget: "string"}
+          - {label: "Cuerpo del Texto", name: "body", widget: "markdown"}
+      - file: "src/data/about.md"
+        label: "Página Nosotros"
         name: "about"
         fields:
-          - { label: "Título", name: "title", widget: "string" }
-          - { label: "Texto principal", name: "body", widget: "markdown" }
-          - { label: "Imagen destacada", name: "image", widget: "image" }
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Contenido", name: "content", widget: "text"}
 
-      - file: "src/pages/catalog.md"
-        label: "Catálogo (intro)"
-        name: "catalog"
-        fields:
-          - { label: "Título", name: "title", widget: "string" }
-          - { label: "Descripción", name: "description", widget: "text" }
-
-      - file: "src/pages/cart.md"
-        label: "Carrito (mensajes)"
-        name: "cart"
-        fields:
-          - { label: "Mensaje si vacío", name: "empty_message", widget: "string" }
-
-      - file: "src/pages/checkout.md"
-        label: "Checkout (texto final)"
-        name: "checkout"
-        fields:
-          - { label: "Texto de agradecimiento", name: "thank_you_text", widget: "string" }
-
-  # --- Productos: colección por carpeta (ideal para un catálogo)
-  - name: "products"
-    label: "Productos"
-    folder: "src/content/products"
-    create: true
-    slug: "{{slug}}"
-    sortable_fields: ["title", "price"]
-    fields:
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Descripción", name: "description", widget: "markdown" }
-      - { label: "SKU / ID (merchize)", name: "sku", widget: "string" }
-      - { label: "Precio (€)", name: "price", widget: "number" }
-      - { label: "Imagen principal", name: "thumbnail", widget: "image" }
-      - { label: "Galería", name: "images", widget: "list", field: { label: "Imagen", name: "image", widget: "image" } }
-      - { label: "Categoría", name: "category", widget: "string" }
-      - { label: "Disponible", name: "available", widget: "boolean", default: true }
-      - { label: "Publicar", name: "published", widget: "boolean", default: true }
+  - name: "blog" # Colección de publicaciones de blog (usa carpetas)
+    label: "Blog Posts"
+    folder: "src/posts" # Carpeta donde se guardan tus archivos de blog (ej. Markdown)
+    create: true # Permite crear nuevas publicaciones
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Formato de nombre de archivo
+    fields: # Los campos que tendrá cada publicación
+      - {label: "Layout", name: "layout", widget: "hidden", default: "post"}
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Fecha", name: "date", widget: "datetime"}
+      - {label: "Imagen destacada", name: "thumbnail", widget: "image", required: false}
+      - {label: "Cuerpo", name: "body", widget: "markdown"}
