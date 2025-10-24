@@ -1,28 +1,27 @@
 backend:
   name: git-gateway
-  # ✅ IMPORTANTE: Mantén 'main' si esa es tu rama principal.
+  # La rama principal de tu repositorio.
   branch: main 
 
-# Habilita el Identity service de Netlify
-publish_mode: editorial_workflow # 'editorial_workflow' para borradores, 'simple' para publicación directa.
-# Rutas de imágenes corregidas
-media_folder: "static/uploads" # ⬅️ CORREGIDO: Usando 'static/uploads' ya que no existe 'static/img'.
-public_folder: "/uploads" # La ruta pública que usará el sitio para acceder a las imágenes.
-# Asegúrate de crear manualmente la carpeta 'static/uploads' en tu repositorio si no existe.
+# Configuración de Medios
+publish_mode: editorial_workflow
+# ⚠️ IMPORTANTE: Esta carpeta DEBE existir en tu repositorio.
+media_folder: "static/uploads" 
+public_folder: "/uploads" 
 
-# --- COLECCIONES CORREGIDAS ---
+# --- COLECCIONES ---
 collections:
-  - name: "pages" # Colección de archivos individuales
+  - name: "pages" 
     label: "Páginas del Sitio"
     files:
-      # ⬅️ RUTA CORREGIDA: Apunta a 'content/pages/home.md'
+      # RUTA CORREGIDA: Apunta a la carpeta 'content/pages/'
       - file: "content/pages/home.md" 
         label: "Página de Inicio"
         name: "home"
         fields:
           - {label: "Título Principal", name: "title", widget: "string"}
           - {label: "Cuerpo del Texto", name: "body", widget: "markdown"}
-      # ⬅️ RUTA CORREGIDA: Apunta a 'content/pages/about.md'
+      # RUTA CORREGIDA: Apunta a la carpeta 'content/pages/'
       - file: "content/pages/about.md"
         label: "Página Nosotros"
         name: "about"
@@ -30,9 +29,9 @@ collections:
           - {label: "Título", name: "title", widget: "string"}
           - {label: "Contenido", name: "content", widget: "text"}
 
-  - name: "blog" # Colección de posts (carpeta)
+  - name: "blog"
     label: "Blog Posts"
-    # ⬅️ RUTA CORREGIDA: Apunta a la carpeta 'content/posts'
+    # RUTA CORREGIDA: Apunta a la carpeta 'content/posts'
     folder: "content/posts" 
     create: true 
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}" 
