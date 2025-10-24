@@ -1,38 +1,42 @@
 backend:
   name: git-gateway
-  branch: main # ✅ IMPORTANTE: Cambia a 'master' si esa es tu rama principal en GitHub/Git.
+  # ✅ IMPORTANTE: Mantén 'main' si esa es tu rama principal.
+  branch: main 
 
 # Habilita el Identity service de Netlify
-publish_mode: editorial_workflow # Opcional: para permitir borradores y revisiones antes de publicar. Si quieres publicar directamente, usa 'simple'
-media_folder: "static/img/uploads" # Dónde se guardarán las imágenes en tu repositorio
-public_folder: "/img/uploads" # La ruta pública para las imágenes en tu sitio
+publish_mode: editorial_workflow # 'editorial_workflow' para borradores, 'simple' para publicación directa.
+# Rutas de imágenes corregidas
+media_folder: "static/uploads" # ⬅️ CORREGIDO: Usando 'static/uploads' ya que no existe 'static/img'.
+public_folder: "/uploads" # La ruta pública que usará el sitio para acceder a las imágenes.
+# Asegúrate de crear manualmente la carpeta 'static/uploads' en tu repositorio si no existe.
 
-# --- COLECCIONES (Ejemplo) ---
-# Debes adaptar esto a la estructura de contenido de tu sitio.
-
+# --- COLECCIONES CORREGIDAS ---
 collections:
-  - name: "pages" # Nombre de la colección (usado internamente)
-    label: "Páginas del Sitio" # Etiqueta que verás en el CMS
+  - name: "pages" # Colección de archivos individuales
+    label: "Páginas del Sitio"
     files:
-      - file: "src/data/home.md" # Ruta real del archivo a modificar
+      # ⬅️ RUTA CORREGIDA: Apunta a 'content/pages/home.md'
+      - file: "content/pages/home.md" 
         label: "Página de Inicio"
         name: "home"
         fields:
           - {label: "Título Principal", name: "title", widget: "string"}
           - {label: "Cuerpo del Texto", name: "body", widget: "markdown"}
-      - file: "src/data/about.md"
+      # ⬅️ RUTA CORREGIDA: Apunta a 'content/pages/about.md'
+      - file: "content/pages/about.md"
         label: "Página Nosotros"
         name: "about"
         fields:
           - {label: "Título", name: "title", widget: "string"}
           - {label: "Contenido", name: "content", widget: "text"}
 
-  - name: "blog" # Colección de publicaciones de blog (usa carpetas)
+  - name: "blog" # Colección de posts (carpeta)
     label: "Blog Posts"
-    folder: "src/posts" # Carpeta donde se guardan tus archivos de blog (ej. Markdown)
-    create: true # Permite crear nuevas publicaciones
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Formato de nombre de archivo
-    fields: # Los campos que tendrá cada publicación
+    # ⬅️ RUTA CORREGIDA: Apunta a la carpeta 'content/posts'
+    folder: "content/posts" 
+    create: true 
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" 
+    fields: 
       - {label: "Layout", name: "layout", widget: "hidden", default: "post"}
       - {label: "Título", name: "title", widget: "string"}
       - {label: "Fecha", name: "date", widget: "datetime"}
