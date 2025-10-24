@@ -1,0 +1,77 @@
+# Netlify CMS config for Kathe & Co. (Gatsby)
+backend:
+  name: git-gateway
+  branch: main
+
+site_url: "https://katheandco.netlify.app"
+display_url: "https://katheandco.netlify.app"
+
+# Carpeta en el repo donde Netlify CMS guardará uploads (relativa, SIN slash inicial)
+media_folder: "static/uploads"
+# Ruta pública desde donde se servirán las imágenes (con slash inicial)
+public_folder: "/uploads"
+
+# Opciones de UI
+logo_url: "/assets/logo.png"
+publish_mode: editorial_workflow    # opcional: workflow de edición antes de publicar (quítalo si no lo quieres)
+
+# Collections: define qué se puede editar desde el panel /admin
+collections:
+
+  # --- Páginas sueltas (ficheros individuales)
+  - name: "pages"
+    label: "Páginas del sitio"
+    files:
+      - file: "src/pages/index.md"
+        label: "Inicio"
+        name: "home"
+        fields:
+          - { label: "Título principal", name: "title", widget: "string" }
+          - { label: "Subtítulo", name: "subtitle", widget: "text" }
+          - { label: "Imagen hero", name: "hero_image", widget: "image" }
+          - { label: "Texto libre (HTML o Markdown)", name: "body", widget: "markdown" }
+
+      - file: "src/pages/about.md"
+        label: "Sobre nosotros"
+        name: "about"
+        fields:
+          - { label: "Título", name: "title", widget: "string" }
+          - { label: "Texto principal", name: "body", widget: "markdown" }
+          - { label: "Imagen destacada", name: "image", widget: "image" }
+
+      - file: "src/pages/catalog.md"
+        label: "Catálogo (intro)"
+        name: "catalog"
+        fields:
+          - { label: "Título", name: "title", widget: "string" }
+          - { label: "Descripción", name: "description", widget: "text" }
+
+      - file: "src/pages/cart.md"
+        label: "Carrito (mensajes)"
+        name: "cart"
+        fields:
+          - { label: "Mensaje si vacío", name: "empty_message", widget: "string" }
+
+      - file: "src/pages/checkout.md"
+        label: "Checkout (texto final)"
+        name: "checkout"
+        fields:
+          - { label: "Texto de agradecimiento", name: "thank_you_text", widget: "string" }
+
+  # --- Productos: colección por carpeta (ideal para un catálogo)
+  - name: "products"
+    label: "Productos"
+    folder: "src/content/products"
+    create: true
+    slug: "{{slug}}"
+    sortable_fields: ["title", "price"]
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descripción", name: "description", widget: "markdown" }
+      - { label: "SKU / ID (merchize)", name: "sku", widget: "string" }
+      - { label: "Precio (€)", name: "price", widget: "number" }
+      - { label: "Imagen principal", name: "thumbnail", widget: "image" }
+      - { label: "Galería", name: "images", widget: "list", field: { label: "Imagen", name: "image", widget: "image" } }
+      - { label: "Categoría", name: "category", widget: "string" }
+      - { label: "Disponible", name: "available", widget: "boolean", default: true }
+      - { label: "Publicar", name: "published", widget: "boolean", default: true }
