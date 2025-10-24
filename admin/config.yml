@@ -1,0 +1,48 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+site_url: "https://tusitio.netlify.app"
+display_url: "https://tusitio.netlify.app"
+
+collections:
+  - name: "pages"
+    label: "Páginas del sitio"
+    files:
+      - file: "index.html"
+        label: "Página principal"
+        name: "home"
+        fields:
+          - { label: "Título principal", name: "main_title", widget: "string" }
+          - { label: "Subtítulo o descripción", name: "subtitle", widget: "text" }
+          - { label: "Imagen principal", name: "hero_image", widget: "image" }
+
+      - file: "about.html"
+        label: "Sobre nosotros"
+        name: "about"
+        fields:
+          - { label: "Título", name: "title", widget: "string" }
+          - { label: "Texto principal", name: "body", widget: "markdown" }
+          - { label: "Imagen destacada", name: "image", widget: "image" }
+
+      - file: "catalog.html"
+        label: "Catálogo de productos"
+        name: "catalog"
+        fields:
+          - { label: "Título", name: "title", widget: "string" }
+          - { label: "Descripción", name: "description", widget: "text" }
+
+      - file: "cart.html"
+        label: "Carrito de compras"
+        name: "cart"
+        fields:
+          - { label: "Mensaje vacío", name: "empty_message", widget: "string" }
+
+      - file: "checkout.html"
+        label: "Checkout"
+        name: "checkout"
+        fields:
+          - { label: "Texto de agradecimiento", name: "thank_you_text", widget: "string" }
